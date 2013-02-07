@@ -1,7 +1,7 @@
 Thermidor
 =========
 
-Thermidor is a very simple blog system (still a work in progress) which uses Require.js and Underscore to load posts in Markdown format and display them dynamically. It is designed to be entirely static server, for easy hosting on S3 or another CDN. Because there is no backend code involved there is no bottleneck to take down the blog if it gets hit by thousands of visitors. Instead the CDN will just serve the static files. Backbone is also used to allow new posts and pages to be loaded without a hard page refresh, but while retaining page history.
+Thermidor is a very simple blog system (still a work in progress) which uses Require.js and Underscore to load posts in Markdown format and display them dynamically. It is designed to be capable of being served as static content, for easy hosting on S3 or another CDN. Because there is no backend code involved there is no bottleneck to take down the blog if it gets hit by thousands of visitors, and it can also be potentially much cheaper to run since there is no need to pay for a server, only the very cheap S3 costs of delivering the static content.
 
 Technologies
 ------------
@@ -15,4 +15,4 @@ Future Improvements
 -------------------
 
 - Pagination for the post list on the main page (In progress Feb 7, 2012)
-- Automated deploy scripts to compress and combine the JavaScript files (using the Require.js deploy scripts) for improved page load time, as well as general GZIP compression of all files and posts so they can be deployed to S3, which does not have built in compression. Ideally this will also include a simple script to automate the deploy to S3, so that all that will be needed will be adding your AWS credentials to a configuration file.
+- Automated deploy script to compress and combine the JavaScript files (using the Require.js deploy scripts) for improved page load time, as well as general GZIP compression of all files and posts so they can be deployed to S3, which does not have built in compression. Ideally this will also include a simple script to automate the deploy to S3, so that all that will be needed will be adding your AWS credentials to a configuration file.
