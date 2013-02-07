@@ -15,4 +15,4 @@ Future Improvements
 -------------------
 
 - Pagination for the post list on the main page (In progress Feb 7, 2012)
-- Automated deploy scripts to compress and combine the JavaScript files for improved page load time, as well as compress posts and deploy them to S3 automatically.
+- Automated deploy scripts to compress and combine the JavaScript files (using the Require.js deploy scripts) for improved page load time, as well as general GZIP compression of all files and posts so they can be deployed to S3, which does not have built in compression. Ideally this will also include a simple script to automate the deploy to S3, so that all that will be needed will be adding your AWS credentials to a configuration file.
