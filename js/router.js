@@ -74,7 +74,7 @@ define([
 		  
       $('#base').on('click','.interceptLink',function (e) {
 	      //Start intercepting clicks on links that have the interceptLink class.
-	      router.navigate($(this).attr('href'),{trigger: true, replace: true});
+	      router.navigate($(this).attr('href'),{trigger: true});
 	      e.preventDefault();
 	      return false;
       });
