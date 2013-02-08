@@ -31,6 +31,9 @@ define([
 				    	Converter = new Markdown.Converter();
 				    	$('#postBody').html(Converter.makeHtml(blogPost));
 				    	$('#postBody img').hide();
+				      $('.hiddenImage').on('load',function () {
+					      $(this).fadeIn(200);
+				      });
 				      $('#postBody img').on('load',function () {
 					      $(this).fadeIn(200);
 				      });

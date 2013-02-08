@@ -111,8 +111,8 @@ define([
 		{
 			//The blog data has not been embedded so load it via AJAX.
 			require([
-					'text!/blog/posts.json',
-					'text!/blog/meta.json'
+					'text!/published/posts.json',
+					'text!/published/meta.json'
 				],
 				function(posts,meta) {
 					Blog.posts = $.parseJSON(posts);
