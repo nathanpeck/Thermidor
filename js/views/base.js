@@ -39,13 +39,14 @@ define([
 	      else
 	      	displayHomePage();	      	      
 	      
-	      $('#base').on('click', '#olderPosts', function () {
+	      $('#base').on('click', '#olderPosts', function (e) {
 	      	currentLength+=5;
 		      var compiledTemplate = _.template(baseTemplate, {
 			      'posts': filteredPosts.slice(0,currentLength),
 			      'meta': meta
 		      });
 		      $('#base').html(compiledTemplate);
+		      e.preventDefault();
 	      });
 	    }
 	  });
