@@ -10,10 +10,11 @@ Technologies
 - [Require.js](https://github.com/jrburke/requirejs) - Used to load libraries and files in a managable and efficient manner.
 - [Underscore](https://github.com/documentcloud/underscore) - Used to render Markdown posts into HTML.
 - [CDNJS](http://cdnjs.com/) - All external libraries are loaded from CDNJS, the fastest CDN on the web, with SPDY support for browsers that can make use of it.
+- [node.js](http://nodejs.org/) - For the backend script which is used to automate things like indexing the Markdown posts, generating sitemap, and deploying to S3.
 
 Future Improvements
 -------------------
 
-- Script to automatically generate the index of posts by crawling the "blog" directory for Markdown files, and reading some sort of meta data attached to them.
+- Script to automatically generate the index of posts by crawling the "blog" directory for Markdown files, and reading some sort of meta data attached to them. (In progress: February 8th, 2013)
 - Proper documentation.
 - Automated deploy script to compress and combine the JavaScript files (using the Require.js deploy scripts) for improved page load time, as well as general GZIP compression of all files and posts so they can be deployed to S3, which does not have built in compression. Ideally this will also include a simple script to automate the deploy to S3, so that all that will be needed will be adding your AWS credentials to a configuration file.
