@@ -1,8 +1,8 @@
 // Filename: views/project/list
 define([
-	  'progress!jquery',
-	  'progress!underscore',
-	  'progress!backbone',
+	  'jquery',
+	  'underscore',
+	  'backbone',
 	  'text!/templates/post.html'
 	],
 	function($, _, Backbone, postTemplate) {
