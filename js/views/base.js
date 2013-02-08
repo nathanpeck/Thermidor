@@ -8,7 +8,6 @@ define([
 	function($, _, Backbone, baseTemplate) {
     var currentLength = 5;
 		var BaseView = Backbone.View.extend({
-	    el: $('#base'),
 	    render: function() {	      	      
 	      //Look through the post index and select only the proper pages, not the redirects
 	    	var postIndex = this.options.posts;
@@ -26,12 +25,19 @@ define([
 		      'posts': filteredPosts.slice(0,currentLength),
 		      'meta': meta
 	      });
-	      	      
-	      // Append our compiled template to this Views "el"
-	      this.$el.fadeOut(100,function () {
-	      	$(this).html(compiledTemplate);
-					$(this).fadeIn(100);
-	      });
+	      
+	      var baseElement = $('#base');
+	      
+	      var displayHomePage = function () {
+					window.document.title = meta.blogTitle;
+	      	baseElement.html(compiledTemplate);
+					baseElement.fadeIn(100);		      
+	      }
+	      
+	      if($.trim(baseElement.html())!='')
+		      baseElement.fadeOut(100,displayHomePage); 
+	      else
+	      	displayHomePage();	      	      
 	      
 	      $('#base').on('click', '#olderPosts', function () {
 	      	currentLength+=5;

@@ -7,7 +7,6 @@ define([
 	],
 	function($, _, Backbone, postTemplate) {
 		var BaseView = Backbone.View.extend({
-	    el: $('#base'),
 	    render: function() {
 	    	var post = this.options.post;
 	    	var meta = this.options.meta;
@@ -18,10 +17,11 @@ define([
 		      	'meta': meta
 	      	}
 	      );
-	      	      
-	      // Append our compiled template to this Views "el"
-	      this.$el.fadeOut(100,function () {
-	      	$(this).html(compiledTemplate);	
+	      
+	      var baseElement = $('#base');
+	      var displayPostPage = function () {
+	      	window.document.title = post.title;
+	      	baseElement.html(compiledTemplate);	
 					require([
 					  	'jquery',
 					  	'markdown',
@@ -34,10 +34,15 @@ define([
 				      $('#postBody img').on('load',function () {
 					      $(this).fadeIn(200);
 				      });
-							$('#base').fadeIn(100);
+							baseElement.fadeIn(100);
 				    }
 			    );
-	      });
+	      };
+	      	      
+	      if($.trim(baseElement.html())!='')
+		      baseElement.fadeOut(100,displayPostPage); 
+	      else
+	      	displayPostPage();	
 	    }
 	  });
 	  // Our module now returns our view
