@@ -6,6 +6,7 @@ define([
 	  'text!/templates/base.html'
 	],
 	function($, _, Backbone, baseTemplate) {
+    var currentLength = 5;
 		var BaseView = Backbone.View.extend({
 	    el: $('#base'),
 	    render: function() {	      	      
@@ -21,14 +22,22 @@ define([
 	      });
 	      
 	      var compiledTemplate = _.template(baseTemplate, {
-		      'posts': filteredPosts
+		      'posts': filteredPosts.slice(0,currentLength)
 	      });
 	      	      
 	      // Append our compiled template to this Views "el"
 	      this.$el.fadeOut(100,function () {
 	      	$(this).html(compiledTemplate);
 					$(this).fadeIn(100);
-	      });	      
+	      });
+	      
+	      $('#base').on('click', '#olderPosts', function () {
+	      	currentLength+=5;
+		      var compiledTemplate = _.template(baseTemplate, {
+			      'posts': filteredPosts.slice(0,currentLength)
+		      });
+		      $('#base').html(compiledTemplate);
+	      });
 	    }
 	  });
 	  // Our module now returns our view
