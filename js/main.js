@@ -4,14 +4,14 @@ require.config({
 	baseUrl: '/js',
 	shim: {
     'underscore': {
-      exports: '_',
+      exports: '_'
     },
     'bootstrap': {
-    	deps: ['jquery'],
+    	deps: ['jquery']
     },
     'backbone': {
       deps: ["underscore", "jquery"],
-      exports: "Backbone",
+      exports: "Backbone"
     },
     'markdown': {
     	exports: 'Markdown'

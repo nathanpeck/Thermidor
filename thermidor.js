@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
-var path = require('path');
+var fs = require('fs'),
+    path = require('path'),
+    execSync = require('exec-sync');
 
 function getExtension(filename) {
-    var ext = path.extname(filename||'').split('.');
-    return ext[ext.length - 1];
+  var ext = path.extname(filename||'').split('.');
+  return ext[ext.length - 1];
 }
 
 String.prototype.repeat = function(num) {
@@ -122,13 +123,122 @@ function indexThermidor()
 
 function publishThermidor()
 {
-	var exec = require('child_process').exec,child;
-	child = exec('rm -rf publish/*',function(err,out) { 
+	var exec = require('child_process').exec;
+	var child = exec('rm -rf publish/*',function(err,out) {
+		//First publish all the static content and blog posts.
     fs.mkdirSync("publish/blog/",0777);
 		var allPosts = lookForPosts('blog/',0,true);
 		allPosts = allPosts.reverse();
 		postIndex = createPostIndex(allPosts);
 		fs.writeFileSync('publish/blog/posts.json',JSON.stringify(postIndex,null,2));
+		
+		htmlCompress = function(source,destination) {
+			console.log('    Minifying...');		
+			content = fs.readFileSync(source).toString();
+			output = execSync('java -jar compilers/html/htmlcompressor-1.5.3.jar '+
+														'--type html '+
+														'--remove-surrounding-spaces all '+
+														'-o '+destination+' '+
+														source);
+		}
+		
+		jsCompress = function(location,destination) {
+			console.log('    Compiling and minifying...');
+			output = execSync('java -jar compilers/closure/compiler.jar '+
+														'--js '+location+' '+
+														'--js_output_file '+destination);
+		}
+		
+		cssCompress = function(source,destination) {
+			content = fs.readFileSync(source).toString();
+			fs.writeFileSync(destination,content);				
+		}
+
+		embedMetaData = function(source,destination) {
+			content = fs.readFileSync(source).toString();
+			fs.writeFileSync(destination,content);				
+		}
+		
+		//Now copy the actual Thermidor frontend code to the publish directory, making modifications as necessary.
+		var filesToPublish = [
+			{
+				'type': 'file',
+				'location': 'index.html',
+				'writer': htmlCompress
+			},
+			{
+				'type': 'folder',
+				'location': 'templates'
+			},
+			{
+				'type': 'file',
+				'location': 'templates/404.html',
+				'writer': htmlCompress
+			},
+			{
+				'type': 'file',
+				'location': 'templates/base.html',
+				'writer': htmlCompress
+			},
+			{
+				'type': 'file',
+				'location': 'templates/post.html',
+				'writer': htmlCompress
+			},
+			{
+				'type': 'folder',
+				'location': 'js'
+			},
+			{
+				'type': 'file',
+				'location': 'js/main.js',
+				'writer': embedMetaData
+			},
+			{
+				'type': 'folder',
+				'location': 'js/views'
+			},
+			{
+				'type': 'file',
+				'location': 'js/views/404.js',
+				'writer': jsCompress
+			},
+			{
+				'type': 'file',
+				'location': 'js/views/base.js',
+				'writer': jsCompress
+			},
+			{
+				'type': 'file',
+				'location': 'js/views/post.js',
+				'writer': jsCompress
+			},
+			{
+				'type': 'folder',
+				'location': 'css'
+			},
+			{
+				'type': 'file',
+				'location': 'css/theme.css',
+				'writer': cssCompress
+			}
+		];
+
+		console.log('Publishing Thermidor Code:')		
+		for(file in filesToPublish)
+		{
+			if(filesToPublish[file].type=='folder')
+			{
+				console.log('  - Folder: '+filesToPublish[file].location);
+	      fs.mkdirSync('publish/'+filesToPublish[file].location,0777);
+			}
+			else
+			{
+				console.log('  - File: '+filesToPublish[file].location);
+				filesToPublish[file].writer(filesToPublish[file].location,'publish/'+filesToPublish[file].location);
+			}
+		}
+		
 	});
 }
 
