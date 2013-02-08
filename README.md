@@ -14,6 +14,7 @@ Technologies
 Future Improvements
 -------------------
 
+- Add proper 404 page support.
 - Seperate out my personal details from the code of the blog, which should be more generic for public use.
 - Script to automatically generate the index of posts by crawling the "blog" directory for Markdown files, and reading some sort of meta data attached to them.
 - Proper documentation.
