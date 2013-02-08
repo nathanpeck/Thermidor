@@ -5,7 +5,7 @@
 				<a class="brand" class='interceptLink' href="/">
 			    <img src='/static/base/me.jpg' style='width: 30px;' class="img-circle" />
 			    <span style='font-weight: bold; font-size: 20px; position: relative; top: 3px; color: black;'>
-				    Nathan Peck
+				    <%- meta.name %>
 			    </span>
 			  </a>
 		  </div>
@@ -16,11 +16,11 @@
 			<div class='hidden-phone'>
 				<div style='text-align: center;'>
 					<div style='margin-top: 30px;'></div>
-					<a class='interceptLink' href='/'><img src='/static/base/me.jpg' style='width: 100px;' class="img-circle" /></a>
+					<a class='interceptLink' href='/'><img src='<%- meta.image %>' style='width: 100px;' class="img-circle" /></a>
 					<br />
-					<h3 class='hidden-tablet'>Nathan Peck</h3>
-					<b class='visible-tablet'><br />Nathan Peck</b>
-					Hacker & Explorer
+					<h3 class='hidden-tablet'><%- meta.name %></h3>
+					<b class='visible-tablet'><br /><%- meta.name %></b>
+					<%- meta.description.short %>
 					<hr />
 				</div>
 			</div>
@@ -29,8 +29,8 @@
     	<div style='border-left: 1px solid #EEE;'>
     		<div class='hidden-phone' style='padding-top: 40px;'></div>
 	    	<div class='innerPadding' style='padding-top: 0px;' id='blogPost'>
-	    		<div class='title'><a class='interceptLink' href='/<%- permalink %>'><%- title %></a></div>
-	    		<div class='date'><%- date %></div>
+	    		<div class='title'><a class='interceptLink' href='/<%- post.permalink %>'><%- post.title %></a></div>
+	    		<div class='date'><%- post.date %></div>
 	    		<div id='postBody'>
 	    		</div>
 	      </div>

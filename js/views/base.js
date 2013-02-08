@@ -11,7 +11,8 @@ define([
 	    el: $('#base'),
 	    render: function() {	      	      
 	      //Look through the post index and select only the proper pages, not the redirects
-	    	var postIndex = this.options.postIndex;
+	    	var postIndex = this.options.posts;
+	    	var meta = this.options.meta;
 	      var filteredPosts = new Array();
 	      _.each(postIndex, function (post, permalink) {
 		      if(post.markdown!=undefined)
@@ -22,7 +23,8 @@ define([
 	      });
 	      
 	      var compiledTemplate = _.template(baseTemplate, {
-		      'posts': filteredPosts.slice(0,currentLength)
+		      'posts': filteredPosts.slice(0,currentLength),
+		      'meta': meta
 	      });
 	      	      
 	      // Append our compiled template to this Views "el"
@@ -34,7 +36,8 @@ define([
 	      $('#base').on('click', '#olderPosts', function () {
 	      	currentLength+=5;
 		      var compiledTemplate = _.template(baseTemplate, {
-			      'posts': filteredPosts.slice(0,currentLength)
+			      'posts': filteredPosts.slice(0,currentLength),
+			      'meta': meta
 		      });
 		      $('#base').html(compiledTemplate);
 	      });

@@ -2,52 +2,22 @@
 	<div class="row">
     <div class="span8 offset2 contentBox">
     	<div class='innerPadding' style='margin-top: 20px; margin-bottom: 20px;'>
-				<img src='/static/base/me.jpg' style='float: left; width: 50px; height: 50px; margin-right: 15px;' class="img-circle" />
-				<h3 style='line-height: 50px; font-size: 30px;'>Nathan Peck</h3>
+				<img src='<%- meta.image %>' style='float: left; width: 50px; height: 50px; margin-right: 15px;' class="img-circle" />
+				<h3 style='line-height: 50px; font-size: 30px;'><%- meta.name %></h3>
 				<hr />
-				Hacker & Explorer in search of memorable moments.
+				<%- meta.description.long %>
 				<table style='margin-top: 15px;'>
-					<tr>
-						<td style='width: 110px;'>
-							<b>Location:</b>
-						</td>
-						<td>
-							Austin, TX
-						</td>
-					</tr>
-					<tr>
-						<td valign='top'>
-							<b>Employment:</b>
-						</td>
-						<td>
-							<a href='http://storydesk.com'>StoryDesk</a> - Senior Lead Backend Engineer
-						</td>
-					</tr>
-					<tr>
-						<td valign='top'>
-							<b>Github:</b>
-						</td>
-						<td>
-							<a href='https://github.com/nathanpeck/'>@nathanpeck</a>
-						</td>
-					</tr>
-					<tr>
-						<td valign='top'>
-							<b>Twitter:</b>
-						</td>
-						<td>
-							<a href='http://twitter.com/nathankpeck'>@nathankpeck</a>
-						</td>
-					</tr>
-					<tr>
-						<td style='padding-top: 10px;' id='emailButton'>
-							<button class='btn' style='margin: 0px;' onclick='$("#emailAddress").show(); $("#emailButton").hide()'>Contact</button>
-						</td>
-					</tr>
+					<% _.each(meta.profile, function(item) { %>
+		    		<tr>
+							<td style='width: 110px;' valign='top'>
+								<b><%- item.key %></b>
+							</td>
+							<td>
+								<%= item.value %>
+							</td>
+						</tr>
+		    	<% }); %>
 				</table>
-				<div id='emailAddress' style='padding-top: 10px; overflow: auto; display: none;'>
-					<code>var email = atob("bmF0aGFuQHN0b3J5ZGVzay5jb20=");</code>
-				</div>
 			</div>
     </div>
   </div>

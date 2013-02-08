@@ -1,3 +1,5 @@
+var Blog = {};
+
 require.config({
 	baseUrl: '/js',
 	shim: {
@@ -29,12 +31,9 @@ define([
 	  'jquery',
 	  'underscore',
 	  'backbone',
-	  'views/base',
-	  'text!/blog/index.json'
+	  'views/base'
 	],
 	function($, _, Backbone, BaseView, postIndex) {
-  	postIndex = $.parseJSON(postIndex);
-  	
   	BlogRouter = Backbone.Router.extend({
 	    routes: {
 	      // Define some URL routes
@@ -58,45 +57,68 @@ define([
 					  ],
 					  function (BaseView) {
 					  	 var baseView = new BaseView({
-						  	 'postIndex': postIndex
+						  	 'posts': Blog.posts,
+						  	 'meta': Blog.meta
 					  	 });
 					    baseView.render();
 					  }
 					);
 					return;
 	    	}
-	    	if(postIndex[parameter]==undefined)
+	    	if(Blog.posts[parameter]==undefined)
 	    	{
 	    		alert('404 Page Placeholder');
 		    	//404
 	    	}
 	    	else
 	    	{
-		    	if(postIndex[parameter]['markdown']!=undefined)
+		    	if(Blog.posts[parameter]['markdown']!=undefined)
 		    	{
 			    	//Render that page.
-			    	postDetails = postIndex[parameter];
+			    	postDetails = Blog.posts[parameter];
 			    	postDetails.permalink = parameter;
 			    	require([
 						  	'views/post'
 						  ],
 						  function (PostView) {
-					  	 var postView = new PostView({'post': postDetails});
+					  	 var postView = new PostView({
+					  	 		'post': postDetails,
+					  	 		'meta': Blog.meta
+					  	 });
 						    postView.render();
 						  }
 						);
 		    	}
-		    	else if(postIndex[parameter]['redirect']!=undefined)
+		    	else if(Blog.posts[parameter]['redirect']!=undefined)
 		    	{
 			    	//Redirect to the appropriate page.
-			    	this.navigate(postIndex[parameter]['redirect'],{trigger: true, replace: true});
+			    	this.navigate(Blog.posts[parameter]['redirect'],{trigger: true, replace: true});
 		    	}
 	    	}
 	    }		    		    
 	  });
 	  
-    router = new BlogRouter;
-    Backbone.history.start({pushState: true});
+	  if(!Blog.hasOwnProperty('posts') | !Blog.hasOwnProperty('meta'))
+		{
+			//The blog data has not been embedded so load it via AJAX.
+			require([
+					'text!/blog/posts.json',
+					'text!/blog/meta.json'
+				],
+				function(posts,meta) {
+					Blog.posts = $.parseJSON(posts);
+					Blog.meta = $.parseJSON(meta);
+					router = new BlogRouter;
+			    Backbone.history.start({pushState: true});
+				}
+			);
+		}
+		else
+		{
+			//Blog data has been embedded, just go ahead with the process.
+			router = new BlogRouter;
+	    Backbone.history.start({pushState: true});
+		}
 	  
     $('#base').on('click','.interceptLink',function (e) {
       //Start intercepting clicks on links that have the interceptLink class.

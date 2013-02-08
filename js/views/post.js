@@ -10,7 +10,14 @@ define([
 	    el: $('#base'),
 	    render: function() {
 	    	var post = this.options.post;
-	      var compiledTemplate = _.template(postTemplate, post);
+	    	var meta = this.options.meta;
+	      var compiledTemplate = _.template(
+	      	postTemplate,
+	      	{
+		      	'post': post,
+		      	'meta': meta
+	      	}
+	      );
 	      	      
 	      // Append our compiled template to this Views "el"
 	      this.$el.fadeOut(100,function () {
