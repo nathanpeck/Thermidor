@@ -14,6 +14,8 @@ Technologies
 Future Improvements
 -------------------
 
+- Add proper 404 page support.
+- Seperate out my personal details from the code of the blog, which should be more generic for public use.
 - Script to automatically generate the index of posts by crawling the "blog" directory for Markdown files, and reading some sort of meta data attached to them.
 - Proper documentation.
 - Automated deploy script to compress and combine the JavaScript files (using the Require.js deploy scripts) for improved page load time, as well as general GZIP compression of all files and posts so they can be deployed to S3, which does not have built in compression. Ideally this will also include a simple script to automate the deploy to S3, so that all that will be needed will be adding your AWS credentials to a configuration file.
