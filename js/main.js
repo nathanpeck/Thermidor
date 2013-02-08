@@ -67,8 +67,17 @@ define([
 	    	}
 	    	if(Blog.posts[parameter]==undefined)
 	    	{
-	    		alert('404 Page Placeholder');
-		    	//404
+	    		require([
+					  	'views/404'
+					  ],
+					  function (PageNotFoundView) {
+					  	 var pageNotFoundView = new PageNotFoundView({
+						  	 'posts': Blog.posts,
+						  	 'meta': Blog.meta
+					  	 });
+					    pageNotFoundView.render();
+					  }
+					);
 	    	}
 	    	else
 	    	{
@@ -126,5 +135,5 @@ define([
       e.preventDefault();
       return false;
     });
-	}
+ 	}
 );

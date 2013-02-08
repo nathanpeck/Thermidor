@@ -30,7 +30,7 @@ define([
 				    function ($,Markdown,blogPost) {
 				    	Converter = new Markdown.Converter();
 				    	$('#postBody').html(Converter.makeHtml(blogPost));
-				    	$('#postBody img').hide(); //Hide images initially and then show them when they load.
+				    	$('#postBody img').hide();
 				      $('#postBody img').on('load',function () {
 					      $(this).fadeIn(200);
 				      });
