@@ -10,6 +10,9 @@ define([
 	    render: function() {
 	    	var post = this.options.post;
 	    	var meta = this.options.meta;
+	    	
+	    	//Trim the meta data from the top of the post.
+	    	
 	      var compiledTemplate = _.template(
 	      	postTemplate,
 	      	{
@@ -28,6 +31,23 @@ define([
 				    	'text!/blog/'+post.markdown
 				    ],
 				    function ($,Markdown,blogPost) {
+    		    	if(blogPost.charAt(0)=='{')
+				    	{
+				    		var bodyFound = false;
+				    		var body = '';
+				    		var lines = blogPost.split('\n');
+				    		for(line in lines)
+				    		{
+					    		if(lines[line]=='')
+						    		bodyFound = true;
+						    	if(bodyFound)
+						    	{
+							    	body += lines[line]+'\n';
+						    	}
+				    		}
+				    		blogPost = body;
+				    	}
+
 				    	Converter = new Markdown.Converter();
 				    	$('#postBody').html(Converter.makeHtml(blogPost));
 				    	$('#postBody img').hide();
